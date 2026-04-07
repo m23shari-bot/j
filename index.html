@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دار الشفاء للطب العربي</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body { font-family: sans-serif; }
+</style>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- زر نسخ -->
+<div class="p-2 text-center bg-black text-white">
+<button onclick="copyCode()" class="bg-green-500 px-4 py-2 rounded">نسخ الكود</button>
+</div>
+
+<!-- الهيدر -->
+<header class="bg-white shadow p-4 flex justify-between">
+<h1 class="font-bold text-lg">دار الشفاء</h1>
+<div>
+<button onclick="toggleCart()">🛒 <span id="cart-count">0</span></button>
+</div>
+</header>
+
+<!-- العنوان -->
+<section class="text-center p-8">
+<h2 class="text-2xl font-bold mb-2">العلاج الطبيعي بأسلوب عربي</h2>
+<button class="bg-green-600 text-white px-6 py-2 rounded">تصفح المنتجات</button>
+</section>
+
+<!-- المنتجات -->
+<div class="grid grid-cols-2 gap-4 p-4" id="products"></div>
+
+<!-- السلة -->
+<div id="cart" class="hidden fixed top-0 right-0 w-80 h-full bg-white shadow p-4 overflow-auto">
+<h2 class="font-bold mb-2">السلة</h2>
+<div id="cart-items"></div>
+<p class="mt-2">الإجمالي: <span id="total">0</span> ريال</p>
+<button onclick="checkout()" class="bg-green-500 text-white w-full mt-2 py-2 rounded">إتمام الطلب</button>
+</div>
+
+<!-- التواصل -->
+<div class="text-center p-6">
+<a href="https://wa.me/967714515565" target="_blank"
+class="bg-green-600 text-white px-6 py-2 rounded block mb-3">
+تواصل عبر واتساب
+</a>
+
+<form onsubmit="sendMessage(event)">
+<input type="text" placeholder="الاسم" class="border p-2 w-full mb-2" required>
+<input type="text" placeholder="رقم الهاتف" class="border p-2 w-full mb-2" required>
+<textarea placeholder="رسالتك" class="border p-2 w-full mb-2"></textarea>
+<button class="bg-black text-white px-4 py-2 w-full">إرسال</button>
+</form>
+</div>
+
+<script>
+let products = [
+{name:"عسل طبيعي", price:100},
+{name:"زيت حبة سوداء", price:80},
+{name:"أعشاب علاجية", price:50},
+{name:"زيت زيتون", price:70}
+];
+
+let cart = [];
+
+function renderProducts(){
+let html="";
+products.forEach((p,i)=>{
+html+=`
+<div class="bg-white p-4 shadow rounded">
+<h3>${p.name}</h3>
+<p>${p.price} ريال</p>
+<button onclick="addToCart(${i})" class="bg-green-500 text-white px-3 py-1 mt-2">أضف</button>
+</div>`;
+});
+document.getElementById("products").innerHTML=html;
+}
+
+function addToCart(i){
+cart.push(products[i]);
+updateCart();
+alert("تمت الإضافة");
+}
+
+function updateCart(){
+document.getElementById("cart-count").innerText=cart.length;
+
+let items="";
+let total=0;
+
+cart.forEach((p,index)=>{
+total+=p.price;
+items+=`
+<div class="flex justify-between border-b py-2">
+<span>${p.name}</span>
+<button onclick="removeItem(${index})">❌</button>
+</div>`;
+});
+
+document.getElementById("cart-items").innerHTML=items;
+document.getElementById("total").innerText=total;
+}
+
+function removeItem(i){
+cart.splice(i,1);
+updateCart();
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("hidden");
+}
+
+function checkout(){
+alert("تم استلام طلبك، سيتم التواصل معك");
+}
+
+function sendMessage(e){
+e.preventDefault();
+alert("تم إرسال الرسالة");
+}
+
+function copyCode(){
+navigator.clipboard.writeText(document.documentElement.outerHTML);
+alert("تم نسخ الكود");
+}
+
+renderProducts();
+</script>
+
+</body>
+</html>
