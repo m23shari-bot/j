@@ -61,10 +61,18 @@ class="bg-green-600 text-white px-6 py-2 rounded block mb-3">
 
 <script>
 let products = [
-{name:"عسل طبيعي", price:100},
-{name:"زيت حبة سوداء", price:80},
-{name:"أعشاب علاجية", price:50},
-{name:"زيت زيتون", price:70}
+{
+name:"عسل طبيعي",
+price:100,
+image:"https://images.unsplash.com/photo-1587049352851-8d4e89133924",
+desc:"عسل طبيعي 100% مفيد للمناعة"
+},
+{
+name:"زيت حبة سوداء",
+price:80,
+image:"https://images.unsplash.com/photo-1604908176997-431c3e1d3c94",
+desc:"زيت أصلي لعلاج الشعر والبشرة"
+}
 ];
 
 let cart = [];
@@ -74,8 +82,10 @@ let html="";
 products.forEach((p,i)=>{
 html+=`
 <div class="bg-white p-4 shadow rounded">
-<h3>${p.name}</h3>
-<p>${p.price} ريال</p>
+<img src="${p.image}" class="w-full h-32 object-cover mb-2 rounded">
+<h3 class="font-bold">${p.name}</h3>
+<p class="text-sm text-gray-600">${p.desc}</p>
+<p class="mt-1">${p.price} ريال</p>
 <button onclick="addToCart(${i})" class="bg-green-500 text-white px-3 py-1 mt-2">أضف</button>
 </div>`;
 });
